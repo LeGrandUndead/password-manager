@@ -1,4 +1,4 @@
-# Comman d prompt password manager app
+# Command prompt password manager app
 
 A **production-grade, locally-stored** password manager written in Python,
 following **Clean Architecture** principles and the **SOLID** design principles.
@@ -54,43 +54,6 @@ python main.py
 # Optional: use a custom vault path
 python main.py --vault ~/.config/pypass/vault.json
 ```
-
----
-
-## Architecture Rationale
-
-### Clean Architecture (Concentric Rings)
-
-```
-┌──────────────────────────────────────────────────┐
-│  CLI / Presentation                (outermost)   │
-│  ┌────────────────────────────────────────────┐  │
-│  │  Data / Repository                         │  │
-│  │  ┌──────────────────────────────────────┐  │  │
-│  │  │  Security / Crypto                   │  │  │
-│  │  │  ┌────────────────────────────────┐  │  │  │
-│  │  │  │  Core / Domain      (innermost) │  │  │  │
-│  │  │  └────────────────────────────────┘  │  │  │
-│  │  └──────────────────────────────────────┘  │  │
-│  └────────────────────────────────────────────┘  │
-└──────────────────────────────────────────────────┘
-```
-
-**Dependency rule**: all arrows point inward. The domain layer imports nothing.
-The CLI imports use-cases but never directly touches crypto or the database.
-
----
-
-### Design Patterns Used
-
-| Pattern | Where | Why |
-|---|---|---|
-| **Repository** | `IVaultRepository` → `JsonVaultRepository` | Decouples persistence from business logic. Swapping to SQLite/encrypted-binary requires only a new adapter. |
-| **Dependency Injection** | `main.py` composition root | Every class receives its collaborators; none creates them. Enables mocking in tests. |
-| **Strategy** | `CryptoService._derive_*` dispatch dict | Selects KDF (Argon2id / Scrypt / PBKDF2) at runtime without if/elif chains. |
-| **Factory Method** | `CryptoService.best_available_kdf()` | Selects the strongest available KDF without the caller knowing the names. |
-| **Ports & Adapters** (Hexagonal) | `core/ports.py` | Business logic depends only on interfaces, not implementations. |
-| **Use-Case / Interactor** | `core/use_cases.py` | Each operation is a self-contained, single-responsibility class. |
 
 ---
 
