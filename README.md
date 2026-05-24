@@ -1,4 +1,4 @@
-# 🔐 PyPass — Secure Local Password Manager
+# Comman d prompt password manager app
 
 A **production-grade, locally-stored** password manager written in Python,
 following **Clean Architecture** principles and the **SOLID** design principles.
