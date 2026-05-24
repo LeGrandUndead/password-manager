@@ -13,7 +13,7 @@ password_manager/
 ├── main.py                          # Composition Root (DI wiring)
 ├── requirements.txt
 │
-├── core/                            # ★ DOMAIN LAYER — zero external deps
+├── core/                            # DOMAIN LAYER — zero external deps
 │   ├── __init__.py
 │   ├── ports.py                     # Abstract interfaces (ICryptoService, IVaultRepository)
 │   ├── use_cases.py                 # Application use-cases / interactors
@@ -22,15 +22,15 @@ password_manager/
 │       ├── credential.py            # Credential model (pure dataclass)
 │       └── vault_metadata.py        # VaultMetadata model (pure dataclass)
 │
-├── security/                        # ★ CRYPTO LAYER — implements ICryptoService
+├── security/                        # CRYPTO LAYER — implements ICryptoService
 │   ├── __init__.py
 │   └── crypto_service.py            # AES-256-GCM + Argon2id/Scrypt/PBKDF2
 │
-├── data/                            # ★ DATA LAYER — implements IVaultRepository
+├── data/                            # DATA LAYER — implements IVaultRepository
 │   ├── __init__.py
 │   └── json_vault_repository.py     # Atomic JSON persistence (vault.json)
 │
-└── cli/                             # ★ PRESENTATION LAYER — CLI only
+└── cli/                             # PRESENTATION LAYER — CLI only
     ├── __init__.py
     ├── controller.py                # Interactive CLI event loop
     └── display.py                   # ANSI formatting, prompts, tables
